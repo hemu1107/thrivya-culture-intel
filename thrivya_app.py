@@ -49,10 +49,15 @@ if 'page' not in st.session_state:
 SLIDER_LEVELS = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
 LEVEL_SCORE = {lvl: i for i, lvl in enumerate(SLIDER_LEVELS)}
 
-# --- Display Slider ---
+# --- Display Slider with Options ---
 def show_slider(q, idx, total):
     st.markdown(f"**{q['id']}: {q['question']}**")
-    value = st.slider(f"Question {idx + 1} of {total}", 0, 4, 2, format="%d", key=q['id'])
+    value = st.slider(
+        f"Question {idx + 1} of {total}",
+        min_value=0, max_value=4, value=2,
+        format=SLIDER_LEVELS[value],
+        key=q['id']
+    )
     st.session_state.responses[q['id']] = SLIDER_LEVELS[value]
     st.markdown("---")
 
@@ -65,7 +70,6 @@ if st.session_state.page != 'intro':
         st.button("🎯 Culture", on_click=lambda: st.session_state.update({'page': 'culture'}))
         st.button("🧘 Wellness", on_click=lambda: st.session_state.update({'page': 'wellness'}))
         st.button("📈 Growth", on_click=lambda: st.session_state.update({'page': 'growth'}))
-        st.button("✅ Submit", on_click=lambda: st.session_state.update({'page': 'results'}))
 
 # --- Page Logic ---
 if st.session_state.page == 'intro':
@@ -107,7 +111,9 @@ elif st.session_state.page == 'culture':
     with st.form("culture_form"):
         for i, q in enumerate(culture_qs):
             show_slider(q, i, len(culture_qs))
-        st.form_submit_button("Save & Continue")
+        if st.form_submit_button("Save & Continue"):
+            st.session_state.page = 'wellness'
+            st.rerun()
 
 elif st.session_state.page == 'wellness':
     st.header("🧘 Wellness Assessment")
@@ -115,7 +121,9 @@ elif st.session_state.page == 'wellness':
     with st.form("wellness_form"):
         for i, q in enumerate(wellness_qs):
             show_slider(q, i, len(wellness_qs))
-        st.form_submit_button("Save & Continue")
+        if st.form_submit_button("Save & Continue"):
+            st.session_state.page = 'growth'
+            st.rerun()
 
 elif st.session_state.page == 'growth':
     st.header("📈 Growth Assessment")
@@ -123,7 +131,9 @@ elif st.session_state.page == 'growth':
     with st.form("growth_form"):
         for i, q in enumerate(growth_qs):
             show_slider(q, i, len(growth_qs))
-        st.form_submit_button("Save & Continue")
+        if st.form_submit_button("Generate Report & Insights"):
+            st.session_state.page = 'results'
+            st.rerun()
 
 elif st.session_state.page == 'results':
     st.title("📊 Culture Intelligence Summary")
@@ -134,12 +144,10 @@ elif st.session_state.page == 'results':
     scores = {'Culture': 0, 'Wellness': 0, 'Growth': 0}
     counts = {'Culture': 0, 'Wellness': 0, 'Growth': 0}
     for q in questions:
+        if q['id'] not in responses:
+            continue
         pillar = pillar_map[q['pillar']]
-        response_value = responses.get(q['id'])
-         if response_value is None:
-        continue  # skip unanswered question
-        val = LEVEL_SCORE[response_value]
-
+        val = LEVEL_SCORE[responses[q['id']]]
         scores[pillar] += val
         counts[pillar] += 1
     avg_scores = {k: round(v / counts[k], 2) if counts[k] else 0 for k, v in scores.items()}
