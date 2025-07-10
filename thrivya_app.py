@@ -135,7 +135,11 @@ elif st.session_state.page == 'results':
     counts = {'Culture': 0, 'Wellness': 0, 'Growth': 0}
     for q in questions:
         pillar = pillar_map[q['pillar']]
-        val = LEVEL_SCORE[responses[q['id']]]
+        response_value = responses.get(q['id'])
+         if response_value is None:
+        continue  # skip unanswered question
+        val = LEVEL_SCORE[response_value]
+
         scores[pillar] += val
         counts[pillar] += 1
     avg_scores = {k: round(v / counts[k], 2) if counts[k] else 0 for k, v in scores.items()}
