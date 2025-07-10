@@ -18,6 +18,7 @@ st.markdown("""
 
 # --- Load Culture Questions JSON ---
 @st.cache_data
+
 def load_questions():
     file_path = Path("culture_questions.json")
     if not file_path.exists():
@@ -55,7 +56,7 @@ def show_slider(q, idx, total):
     value = st.slider(
         f"Question {idx + 1} of {total}",
         min_value=0, max_value=4, value=2,
-        format=SLIDER_LEVELS[value],
+        format="%s" % SLIDER_LEVELS[2],
         key=q['id']
     )
     st.session_state.responses[q['id']] = SLIDER_LEVELS[value]
@@ -131,7 +132,7 @@ elif st.session_state.page == 'growth':
     with st.form("growth_form"):
         for i, q in enumerate(growth_qs):
             show_slider(q, i, len(growth_qs))
-        if st.form_submit_button("Generate Report & Insights"):
+        if st.form_submit_button("Generate Insights & Report"):
             st.session_state.page = 'results'
             st.rerun()
 
