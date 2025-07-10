@@ -1,21 +1,92 @@
 [
-  {"id": "Q1", "question": "I feel safe to voice my opinions at work.", "pillar": "Psychological Safety"},
-  {"id": "Q2", "question": "My contributions are recognized by my manager or peers.", "pillar": "Psychological Safety"},
-  {"id": "Q3", "question": "I can admit mistakes without fear of negative consequences.", "pillar": "Psychological Safety"},
-
-  {"id": "Q4", "question": "I understand how my role contributes to the company’s goals.", "pillar": "Purpose & Alignment"},
-  {"id": "Q5", "question": "Leadership communicates the company’s vision clearly.", "pillar": "Purpose & Alignment"},
-  {"id": "Q6", "question": "Team goals and expectations are well-defined.", "pillar": "Purpose & Alignment"},
-
-  {"id": "Q7", "question": "Workload distribution is fair across my team.", "pillar": "Team Collaboration"},
-  {"id": "Q8", "question": "Team members support each other during high-pressure periods.", "pillar": "Team Collaboration"},
-  {"id": "Q9", "question": "Our meetings are productive and respectful.", "pillar": "Team Collaboration"},
-
-  {"id": "Q10", "question": "I have opportunities to grow and develop at work.", "pillar": "Growth & Learning"},
-  {"id": "Q11", "question": "I receive regular and helpful feedback from my manager.", "pillar": "Growth & Learning"},
-  {"id": "Q12", "question": "The company invests in learning and development programs.", "pillar": "Growth & Learning"},
-
-  {"id": "Q13", "question": "Diverse backgrounds and perspectives are respected in our team.", "pillar": "Inclusion & Belonging"},
-  {"id": "Q14", "question": "I feel I belong in this organization.", "pillar": "Inclusion & Belonging"},
-  {"id": "Q15", "question": "The workplace is free from discrimination and bias.", "pillar": "Inclusion & Belonging"}
+  {
+    "id": "CULT1",
+    "pillar": "Leadership & Vision",
+    "question": "How effectively does your organization communicate its mission and values to all employees?",
+    "options": ["Not at all", "Rarely", "Sometimes", "Often", "Very Effectively"]
+  },
+  {
+    "id": "CULT2",
+    "pillar": "Leadership & Vision",
+    "question": "How frequently do leaders visibly champion and model desired organizational values?",
+    "options": ["Never", "Occasionally", "Sometimes", "Frequently", "Consistently"]
+  },
+  {
+    "id": "CULT3",
+    "pillar": "Inclusivity & Belonging",
+    "question": "To what extent do employees feel respected and included regardless of their background?",
+    "options": ["Not at all", "Somewhat", "Moderately", "Significantly", "Completely"]
+  },
+  {
+    "id": "CULT4",
+    "pillar": "Inclusivity & Belonging",
+    "question": "How effectively does the organization address and prevent bias or discrimination?",
+    "options": ["Ineffective", "Needs Improvement", "Moderately Effective", "Mostly Effective", "Highly Effective"]
+  },
+  {
+    "id": "CULT5",
+    "pillar": "Recognition & Motivation",
+    "question": "How valued do employees feel for their contributions?",
+    "options": ["Not at all", "Rarely", "Sometimes", "Often", "Always"]
+  },
+  {
+    "id": "CULT6",
+    "pillar": "Recognition & Motivation",
+    "question": "How regularly are outstanding efforts formally recognized or rewarded?",
+    "options": ["Never", "Annually", "Quarterly", "Monthly", "Weekly or more"]
+  },
+  {
+    "id": "CULT7",
+    "pillar": "Well-being & Work-Life",
+    "question": "How supported do employees feel regarding mental health and work-life balance?",
+    "options": ["Not supported", "Rarely supported", "Somewhat supported", "Mostly supported", "Fully supported"]
+  },
+  {
+    "id": "CULT8",
+    "pillar": "Well-being & Work-Life",
+    "question": "How reasonable are expectations around workload and after-hours communication?",
+    "options": ["Very Unreasonable", "Unreasonable", "Neutral", "Reasonable", "Very Reasonable"]
+  },
+  {
+    "id": "CULT9",
+    "pillar": "Feedback & Communication",
+    "question": "How comfortable are employees giving honest feedback to managers or leadership?",
+    "options": ["Not at all", "Slightly", "Somewhat", "Mostly", "Extremely"]
+  },
+  {
+    "id": "CULT10",
+    "pillar": "Feedback & Communication",
+    "question": "How transparent is internal communication on company decisions and direction?",
+    "options": ["Not Transparent", "Rarely Transparent", "Moderately Transparent", "Mostly Transparent", "Fully Transparent"]
+  },
+  {
+    "id": "CULT11",
+    "pillar": "Learning & Growth",
+    "question": "How accessible are skill-building or upskilling opportunities within the organization?",
+    "options": ["Not Accessible", "Limited", "Average", "Easily Accessible", "Highly Accessible"]
+  },
+  {
+    "id": "CULT12",
+    "pillar": "Learning & Growth",
+    "question": "How clear are career progression paths and promotion criteria?",
+    "options": ["Not clear", "Somewhat unclear", "Moderately clear", "Mostly clear", "Very clear"]
+  },
+  {
+    "id": "CULT13",
+    "pillar": "Team Dynamics & Trust",
+    "question": "How collaborative and trusting is the work environment among peers?",
+    "options": ["Not at all", "Slightly", "Moderately", "Mostly", "Completely"]
+  },
+  {
+    "id": "CULT14",
+    "pillar": "Team Dynamics & Trust",
+    "question": "How frequently are cross-functional teams encouraged and enabled to work together?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Always"]
+  },
+  {
+    "id": "CULT15",
+    "pillar": "Autonomy & Empowerment",
+    "question": "To what extent do employees feel empowered to take initiative and make decisions?",
+    "options": ["Not at all", "Occasionally", "Sometimes", "Often", "Very Empowered"]
+  }
 ]
