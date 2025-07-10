@@ -1,4 +1,4 @@
 streamlit
 requests
-plotly
+plotly==5.19.0
 cohere
