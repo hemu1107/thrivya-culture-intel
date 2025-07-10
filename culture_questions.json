@@ -1,0 +1,21 @@
+[
+  {"id": "Q1", "question": "I feel safe to voice my opinions at work.", "pillar": "Psychological Safety"},
+  {"id": "Q2", "question": "My contributions are recognized by my manager or peers.", "pillar": "Psychological Safety"},
+  {"id": "Q3", "question": "I can admit mistakes without fear of negative consequences.", "pillar": "Psychological Safety"},
+
+  {"id": "Q4", "question": "I understand how my role contributes to the company’s goals.", "pillar": "Purpose & Alignment"},
+  {"id": "Q5", "question": "Leadership communicates the company’s vision clearly.", "pillar": "Purpose & Alignment"},
+  {"id": "Q6", "question": "Team goals and expectations are well-defined.", "pillar": "Purpose & Alignment"},
+
+  {"id": "Q7", "question": "Workload distribution is fair across my team.", "pillar": "Team Collaboration"},
+  {"id": "Q8", "question": "Team members support each other during high-pressure periods.", "pillar": "Team Collaboration"},
+  {"id": "Q9", "question": "Our meetings are productive and respectful.", "pillar": "Team Collaboration"},
+
+  {"id": "Q10", "question": "I have opportunities to grow and develop at work.", "pillar": "Growth & Learning"},
+  {"id": "Q11", "question": "I receive regular and helpful feedback from my manager.", "pillar": "Growth & Learning"},
+  {"id": "Q12", "question": "The company invests in learning and development programs.", "pillar": "Growth & Learning"},
+
+  {"id": "Q13", "question": "Diverse backgrounds and perspectives are respected in our team.", "pillar": "Inclusion & Belonging"},
+  {"id": "Q14", "question": "I feel I belong in this organization.", "pillar": "Inclusion & Belonging"},
+  {"id": "Q15", "question": "The workplace is free from discrimination and bias.", "pillar": "Inclusion & Belonging"}
+]
