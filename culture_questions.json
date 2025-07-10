@@ -1,90 +1,90 @@
 [
   {
-    "id": "CULT1",
+    "id": "C1",
     "pillar": "Leadership & Vision",
     "question": "How effectively does your organization communicate its mission and values to all employees?",
     "options": ["Not at all", "Rarely", "Sometimes", "Often", "Very Effectively"]
   },
   {
-    "id": "CULT2",
+    "id": "C2",
     "pillar": "Leadership & Vision",
     "question": "How frequently do leaders visibly champion and model desired organizational values?",
     "options": ["Never", "Occasionally", "Sometimes", "Frequently", "Consistently"]
   },
   {
-    "id": "CULT3",
+    "id": "C3",
     "pillar": "Inclusivity & Belonging",
     "question": "To what extent do employees feel respected and included regardless of their background?",
     "options": ["Not at all", "Somewhat", "Moderately", "Significantly", "Completely"]
   },
   {
-    "id": "CULT4",
+    "id": "C4",
     "pillar": "Inclusivity & Belonging",
     "question": "How effectively does the organization address and prevent bias or discrimination?",
     "options": ["Ineffective", "Needs Improvement", "Moderately Effective", "Mostly Effective", "Highly Effective"]
   },
   {
-    "id": "CULT5",
+    "id": "C5",
     "pillar": "Recognition & Motivation",
     "question": "How valued do employees feel for their contributions?",
     "options": ["Not at all", "Rarely", "Sometimes", "Often", "Always"]
   },
   {
-    "id": "CULT6",
+    "id": "C6",
     "pillar": "Recognition & Motivation",
     "question": "How regularly are outstanding efforts formally recognized or rewarded?",
     "options": ["Never", "Annually", "Quarterly", "Monthly", "Weekly or more"]
   },
   {
-    "id": "CULT7",
+    "id": "W1",
     "pillar": "Well-being & Work-Life",
     "question": "How supported do employees feel regarding mental health and work-life balance?",
     "options": ["Not supported", "Rarely supported", "Somewhat supported", "Mostly supported", "Fully supported"]
   },
   {
-    "id": "CULT8",
+    "id": "W2",
     "pillar": "Well-being & Work-Life",
     "question": "How reasonable are expectations around workload and after-hours communication?",
     "options": ["Very Unreasonable", "Unreasonable", "Neutral", "Reasonable", "Very Reasonable"]
   },
   {
-    "id": "CULT9",
+    "id": "W3",
     "pillar": "Feedback & Communication",
     "question": "How comfortable are employees giving honest feedback to managers or leadership?",
     "options": ["Not at all", "Slightly", "Somewhat", "Mostly", "Extremely"]
   },
   {
-    "id": "CULT10",
+    "id": "W4",
     "pillar": "Feedback & Communication",
     "question": "How transparent is internal communication on company decisions and direction?",
     "options": ["Not Transparent", "Rarely Transparent", "Moderately Transparent", "Mostly Transparent", "Fully Transparent"]
   },
   {
-    "id": "CULT11",
+    "id": "G1",
     "pillar": "Learning & Growth",
     "question": "How accessible are skill-building or upskilling opportunities within the organization?",
     "options": ["Not Accessible", "Limited", "Average", "Easily Accessible", "Highly Accessible"]
   },
   {
-    "id": "CULT12",
+    "id": "G2",
     "pillar": "Learning & Growth",
     "question": "How clear are career progression paths and promotion criteria?",
     "options": ["Not clear", "Somewhat unclear", "Moderately clear", "Mostly clear", "Very clear"]
   },
   {
-    "id": "CULT13",
+    "id": "G3",
     "pillar": "Team Dynamics & Trust",
     "question": "How collaborative and trusting is the work environment among peers?",
     "options": ["Not at all", "Slightly", "Moderately", "Mostly", "Completely"]
   },
   {
-    "id": "CULT14",
+    "id": "G4",
     "pillar": "Team Dynamics & Trust",
     "question": "How frequently are cross-functional teams encouraged and enabled to work together?",
     "options": ["Never", "Rarely", "Sometimes", "Often", "Always"]
   },
   {
-    "id": "CULT15",
+    "id": "G5",
     "pillar": "Autonomy & Empowerment",
     "question": "To what extent do employees feel empowered to take initiative and make decisions?",
     "options": ["Not at all", "Occasionally", "Sometimes", "Often", "Very Empowered"]
