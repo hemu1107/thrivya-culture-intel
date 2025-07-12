@@ -937,11 +937,7 @@ TONE: Professional yet accessible, data-driven but human-centered, optimistic bu
                 <p style="margin: 0; font-size: 1rem; font-weight: 600;">Thrivya Culture Intelligence Platform</p>
                 <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.8;">Crafted by Hemaang Patkar</p>
             </div>
-            <div style="text-align: right;">
-                <p style="margin: 0; font-size: 0.9rem; opacity: 0.8;">Empowering HR professionals worldwide</p>
-                <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; opacity: 0.7;">
-                    Report generated on {datetime.now().strftime('%B %d, %Y')}
-                </p>
+
             </div>
         </div>
     </div>
