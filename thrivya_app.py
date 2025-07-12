@@ -938,7 +938,7 @@ TONE: Professional yet accessible, data-driven but human-centered, optimistic bu
                 <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.8;">Crafted by Hemaang Patkar</p>
             </div>
 
-            </div>
+           
         </div>
     </div>
     """, unsafe_allow_html=True)
