@@ -296,8 +296,8 @@ if st.session_state.page == "intro":
             <p>Learning opportunities, empowerment, and team dynamics evaluation</p>
         </div>
         <div class="feature-item growth-card">
-            <div class="feature-icon">📈</div>
-            <h3>Instant AI-generated report</h3>
+            <div class="feature-icon">⚡</div>
+            <h3>Instant AI based Insights</h3>
             <p>Tailored to your organization's needs</p>
         </div>
     </div>
@@ -309,7 +309,7 @@ if st.session_state.page == "intro":
         <h3 style="color: #2c3e50; margin-bottom: 1rem;">🚀 Why Thrivya?</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
             <div>
-                <strong>⚡ Instant Insights:</strong> Get AI-powered recommendations in minutes, not weeks
+                <strong>🔄 Continuous:</strong> Track progress and measure cultural transformation over time
             </div>
             <div>
                 <strong>📊 Data-Driven:</strong> Evidence-based culture assessment with actionable metrics
