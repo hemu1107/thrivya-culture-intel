@@ -939,6 +939,6 @@ TONE: Professional yet accessible, data-driven but human-centered, optimistic bu
             </div>
 
            
-        </div>
+        
     </div>
     """, unsafe_allow_html=True)
