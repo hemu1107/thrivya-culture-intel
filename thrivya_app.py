@@ -295,6 +295,11 @@ if st.session_state.page == "intro":
             <h3>Growth Tracking</h3>
             <p>Learning opportunities, empowerment, and team dynamics evaluation</p>
         </div>
+        <div class="feature-item growth-card">
+            <div class="feature-icon">📈</div>
+            <h3>Instant AI-generated report</h3>
+            <p>Tailored to your organization's needs</p>
+        </div>
     </div>
     """, unsafe_allow_html=True)
     
@@ -312,9 +317,6 @@ if st.session_state.page == "intro":
             <div>
                 <strong>🎯 HR-Focused:</strong> Practical tools and templates for immediate implementation
             </div>
-            <div>
-                <strong>🔄 Continuous:</strong> Track progress and measure cultural transformation over time
-            </div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -330,7 +332,7 @@ if st.session_state.page == "intro":
     # Brand Footer
     st.markdown("""
     <div class="brand-footer">
-        <p style="margin: 0; font-size: 0.9rem; opacity: 0.8;">Crafted with ❤️ by Hemaang Patkar</p>
+        <p style="margin: 0; font-size: 0.9rem; opacity: 0.8;">Crafted by Hemaang Patkar</p>
         <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; opacity: 0.7;">Empowering HR professionals with culture intelligence</p>
     </div>
     """, unsafe_allow_html=True)
