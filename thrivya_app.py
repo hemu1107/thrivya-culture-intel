@@ -787,7 +787,7 @@ TONE: Professional yet accessible, data-driven but human-centered, optimistic bu
                             "model": "command-r-plus",
                             "message": enhanced_prompt,
                             "temperature": 0.7,
-                            "max_tokens": 10000
+                            "max_tokens": 4096
                         },
                         timeout=180
                     )
