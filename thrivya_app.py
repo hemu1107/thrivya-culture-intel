@@ -778,8 +778,10 @@ TONE: Professional, data-driven, human-centered, optimistic.
                 **Focus Area:** {lowest_score[0]} ({lowest_score[1]}/4.0)
                 **Recommendations:** Improve {lowest_score[0].lower()} initiatives, conduct focus groups, implement pulse surveys
                 """)
+    except Exception as e:
+        st.error(f"❌ Error in recommendations: {str(e)}")
 
-    # Additional Analytics
+    # Additional Insights
     st.markdown("### 📊 Additional Insights")
     col1, col2 = st.columns([1, 1], gap="medium")
     with col1:
