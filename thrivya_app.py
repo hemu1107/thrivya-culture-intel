@@ -127,7 +127,7 @@ st.markdown("""
         }
 
         .stButton > button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
             color: white;
             border: none;
             border-radius: 8px;
@@ -285,23 +285,13 @@ def show_enhanced_slider(q, idx, total, category):
     if q['id'] in st.session_state.responses:
         current_val = LEVEL_SCORE[st.session_state.responses[q['id']]]
 
-    col1, col2 = st.columns([3, 1])
-    with col1:
-        val = st.slider(
-            f"Response for Question {idx + 1}",
-            0, 4, current_val,
-            format="",
-            key=f"slider_{q['id']}",
-            label_visibility="collapsed"
-        )
-
-    with col2:
-        color = LEVEL_COLORS[val]
-        st.markdown(f"""
-        <div style="text-align: center; padding: 0.75rem; background: {color}; color: white; border-radius: 8px; font-weight: 600; margin-top: 1rem;">
-            {SLIDER_LEVELS[val]}
-        </div>
-        """, unsafe_allow_html=True)
+    val = st.slider(
+        f"Response for Question {idx + 1}",
+        0, 4, current_val,
+        format="",
+        key=f"slider_{q['id']}",
+        label_visibility="collapsed"
+    )
 
     # Update session state immediately
     st.session_state.responses[q['id']] = SLIDER_LEVELS[val]
@@ -449,6 +439,12 @@ elif st.session_state.page == "culture":
     </div>
     """, unsafe_allow_html=True)
 
+    st.markdown("""
+    <div style="margin-bottom: 1.5rem; font-size: 0.9rem; color: #7f8c8d;">
+        📌 Note: Left most - Strongly Disagree, Middle - Neutral, Right most - Strongly Agree
+    </div>
+    """, unsafe_allow_html=True)
+
     show_progress_bar()
 
     questions_culture = [q for q in questions if pillar_map[q['pillar']] == "Culture"]
@@ -480,6 +476,12 @@ elif st.session_state.page == "wellness":
     </div>
     """, unsafe_allow_html=True)
 
+    st.markdown("""
+    <div style="margin-bottom: 1.5rem; font-size: 0.9rem; color: #7f8c8d;">
+        📌 Note: Left most - Strongly Disagree, Middle - Neutral, Right most - Strongly Agree
+    </div>
+    """, unsafe_allow_html=True)
+
     show_progress_bar()
 
     questions_wellness = [q for q in questions if pillar_map[q['pillar']] == "Wellness"]
@@ -508,6 +510,12 @@ elif st.session_state.page == "growth":
     <div class="main-header">
         <h1 class="main-title">📈 Growth Assessment</h1>
         <p class="main-subtitle">Learning, Empowerment & Team Dynamics</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div style="margin-bottom: 1.5rem; font-size: 0.9rem; color: #7f8c8d;">
+        📌 Note: Left most - Strongly Disagree, Middle - Neutral, Right most - Strongly Agree
     </div>
     """, unsafe_allow_html=True)
 
@@ -619,7 +627,8 @@ elif st.session_state.page == "results":
         line=dict(color='rgba(102, 126, 234, 1)', width=3)
     ))
 
-    benchmark_scores = [3.2, 2.8, 3.0]  # Simulated industry averages
+    # Adjusted benchmark scores to match all three categories
+    benchmark_scores = [3.2, 2.8, 3.0]  # Ensure length matches avg_scores.keys()
     fig.add_trace(go.Scatterpolar(
         r=benchmark_scores,
         theta=list(avg_scores.keys()),
