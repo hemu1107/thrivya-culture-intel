@@ -276,7 +276,6 @@ def show_enhanced_slider(q, idx, total, category):
             0, 4, current_val,
             format="",
             key=f"slider_{q['id']}_{uuid.uuid4()}",
-            on_change=lambda: st.session_state.update({q['id']: SLIDER_LEVELS[val]}),
             label_visibility="collapsed"
         )
     with col2:
@@ -286,7 +285,7 @@ def show_enhanced_slider(q, idx, total, category):
             {SLIDER_LEVELS[val]}
         </div>
         """, unsafe_allow_html=True)
-    st.session_state.responses[q['id']] = SLIDER_LEVELS[val]
+    # Update responses only when form is submitted, handled in the form callback
 
 # --- Page Navigation ---
 st.markdown('<div class="main-container">', unsafe_allow_html=True)
@@ -436,11 +435,15 @@ elif st.session_state.page == "culture":
         with col2:
             next_btn = st.form_submit_button("Next: Wellness Assessment →", use_container_width=True)
 
+        if next_btn:
+            # Update responses based on current slider values
+            for i, q in enumerate(questions_culture):
+                current_val = st.session_state[f"slider_{q['id']}_{uuid.uuid4().hex}"]
+                st.session_state.responses[q['id']] = SLIDER_LEVELS[current_val]
+            st.session_state.page = "wellness"
+            st.rerun()
         if back_btn:
             st.session_state.page = "details"
-            st.rerun()
-        if next_btn:
-            st.session_state.page = "wellness"
             st.rerun()
 
 elif st.session_state.page == "wellness":
@@ -465,11 +468,15 @@ elif st.session_state.page == "wellness":
         with col2:
             next_btn = st.form_submit_button("Next: Growth Assessment →", use_container_width=True)
 
+        if next_btn:
+            # Update responses based on current slider values
+            for i, q in enumerate(questions_wellness):
+                current_val = st.session_state[f"slider_{q['id']}_{uuid.uuid4().hex}"]
+                st.session_state.responses[q['id']] = SLIDER_LEVELS[current_val]
+            st.session_state.page = "growth"
+            st.rerun()
         if back_btn:
             st.session_state.page = "culture"
-            st.rerun()
-        if next_btn:
-            st.session_state.page = "growth"
             st.rerun()
 
 elif st.session_state.page == "growth":
@@ -494,11 +501,15 @@ elif st.session_state.page == "growth":
         with col2:
             generate_btn = st.form_submit_button("🎯 Generate Culture Intelligence Report", use_container_width=True)
 
+        if generate_btn:
+            # Update responses based on current slider values
+            for i, q in enumerate(questions_growth):
+                current_val = st.session_state[f"slider_{q['id']}_{uuid.uuid4().hex}"]
+                st.session_state.responses[q['id']] = SLIDER_LEVELS[current_val]
+            st.session_state.page = "results"
+            st.rerun()
         if back_btn:
             st.session_state.page = "wellness"
-            st.rerun()
-        if generate_btn:
-            st.session_state.page = "results"
             st.rerun()
 
 elif st.session_state.page == "results":
