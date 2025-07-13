@@ -279,7 +279,7 @@ if "page" not in st.session_state:
 
 SLIDER_LEVELS = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
 LEVEL_SCORE = {lvl: i for i, lvl in enumerate(SLIDER_LEVELS)}
-LEVEL_COLORS = ["#c0392b", "#e74c3c", "#f1c40f", #27ae60", "#2ecc71"]
+LEVEL_COLORS = ["#c0392b", "#e74c3c", "#f1c40f", "#27ae60", "#2ecc71"]  # Fixed syntax error
 
 # --- Utility Functions ---
 def get_score_interpretation(score):
