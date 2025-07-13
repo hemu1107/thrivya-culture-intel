@@ -344,6 +344,10 @@ def show_enhanced_slider(q, idx, total, category_color="#667eea"):
     if q['id'] in st.session_state.responses:
         current_val = LEVEL_SCORE[st.session_state.responses[q['id']]]
     
+    # Use a callback function to update session state immediately
+    def update_response(q_id, value):
+        st.session_state.responses[q_id] = SLIDER_LEVELS[value]
+
     col1, col2 = st.columns([3, 1])
     with col1:
         val = st.slider(
@@ -351,7 +355,9 @@ def show_enhanced_slider(q, idx, total, category_color="#667eea"):
             0, 4, current_val,
             format="",
             key=f"slider_{q['id']}",
-            label_visibility="collapsed"
+            label_visibility="collapsed",
+            on_change=update_response,  # Call update_response when slider changes
+            args=(q['id'], ) # Pass q['id'] to the callback
         )
     
     with col2:
@@ -362,7 +368,7 @@ def show_enhanced_slider(q, idx, total, category_color="#667eea"):
         </div>
         """, unsafe_allow_html=True)
     
-    st.session_state.responses[q['id']] = SLIDER_LEVELS[val]
+    # st.session_state.responses[q['id']] = SLIDER_LEVELS[val] # This line is moved to on_change
 
 # --- Enhanced Pages ---
 if st.session_state.page == "intro":
