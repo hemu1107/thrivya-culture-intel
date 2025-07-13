@@ -143,7 +143,7 @@ st.markdown("""
 
         .intro-features {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
             margin: 2rem 0;
             justify-content: center;
@@ -156,6 +156,7 @@ st.markdown("""
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             transition: transform 0.3s ease;
+            height: 100%;
         }
 
         .feature-item:hover {
@@ -176,6 +177,31 @@ st.markdown("""
             text-align: center;
             color: white;
         }
+
+        .why-thrivya-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.25rem;
+        }
+
+        .why-thrivya-feature {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .why-thrivya-feature:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .continuous-feature { background: linear-gradient(135deg, #ff9f43 0%, #ec6f66 100%); color: white; }
+        .data-driven-feature { background: linear-gradient(135deg, #4facfe 0%, #00d2ff 100%); color: white; }
+        .hr-focused-feature { background: linear-gradient(135deg, #6be585 0%, #3cba92 100%); color: white; }
 
         /* Slider Guide Styles */
         .slider-guide {
@@ -212,10 +238,16 @@ st.markdown("""
         }
 
         /* Responsive Adjustments */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
+            .intro-features { grid-template-columns: repeat(2, 1fr); }
+            .why-thrivya-features { grid-template-columns: repeat(2, 1fr); }
             .main-title { font-size: 2rem; }
             .main-subtitle { font-size: 1rem; }
+        }
+
+        @media (max-width: 768px) {
             .intro-features { grid-template-columns: 1fr; }
+            .why-thrivya-features { grid-template-columns: 1fr; }
             .metric-card { margin: 0.75rem 0; }
             .pillar-card { margin: 0.75rem 0; }
             .slider-guide { flex-direction: column; gap: 1rem; }
@@ -279,7 +311,7 @@ if "page" not in st.session_state:
 
 SLIDER_LEVELS = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
 LEVEL_SCORE = {lvl: i for i, lvl in enumerate(SLIDER_LEVELS)}
-LEVEL_COLORS = ["#c0392b", "#e74c3c", "#f1c40f", "#27ae60", "#2ecc71"]  # Fixed syntax error
+LEVEL_COLORS = ["#c0392b", "#e74c3c", "#f1c40f", "#27ae60", "#2ecc71"]
 
 # --- Utility Functions ---
 def get_score_interpretation(score):
@@ -382,10 +414,16 @@ if st.session_state.page == "intro":
     st.markdown("""
     <div class="why-thrivya">
         <h3 style="margin-bottom: 1.25rem;">🚀 Why Thrivya?</h3>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; text-align: center;">
-            <div><strong>🔄 Continuous</strong></div>
-            <div><strong>📊 Data-Driven</strong></div>
-            <div><strong>🎯 HR-Focused</strong></div>
+        <div class="why-thrivya-features">
+            <div class="why-thrivya-feature continuous-feature">
+                <strong>🔄 Continuous</strong>
+            </div>
+            <div class="why-thrivya-feature data-driven-feature">
+                <strong>📊 Data-Driven</strong>
+            </div>
+            <div class="why-thrivya-feature hr-focused-feature">
+                <strong>🎯 HR-Focused</strong>
+            </div>
         </div>
     </div>
     """, unsafe_allow_html=True)
