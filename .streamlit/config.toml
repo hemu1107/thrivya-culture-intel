@@ -1,10 +1,10 @@
 [theme]
 base = "light"
-primaryColor = "#5A67D8"                    # Calming violet-blue (trust + insight)
-backgroundColor = "#F9FAFB"                 # Very soft grey-white
-secondaryBackgroundColor = "#FFFFFF"        # Card backgrounds
-textColor = "#111827"                       # Rich charcoal for readability
-font = "sans serif"
+primaryColor = "#6B7280"                    # Soft slate grey (calm, professional, insight-driven)
+backgroundColor = "#F3F4F6"                 # Warm off-white (gentle, inviting like a blooming 🌸)
+secondaryBackgroundColor = "#FFFFFF"        # Pure white for cards (clean, focused)
+textColor = "#1F2937"                       # Deep slate (readable, authoritative yet warm)
+font = "Inter"                             # Modern, clean sans-serif with excellent readability
 
 [browser]
 gatherUsageStats = false
