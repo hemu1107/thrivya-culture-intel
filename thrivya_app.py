@@ -143,16 +143,17 @@ st.markdown("""
 
         .intro-features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
             margin: 2rem 0;
+            justify-content: center;
+            text-align: center;
         }
 
         .feature-item {
-            background: white;
+            background: rgba(255, 255, 255, 0.9);
             padding: 2rem;
             border-radius: 12px;
-            text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             transition: transform 0.3s ease;
         }
@@ -166,11 +167,20 @@ st.markdown("""
             margin-bottom: 1rem;
         }
 
+        .why-thrivya {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
         /* Slider Guide Styles */
         .slider-guide {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 1.5rem;
+            margin: 1.5rem 0;
             padding: 1rem;
             background: #f8f9fa;
             border-radius: 10px;
@@ -184,11 +194,21 @@ st.markdown("""
             border-radius: 8px;
             font-weight: 600;
             color: white;
+            margin: 0 0.25rem;
         }
 
         .slider-guide-disagree { background-color: #e74c3c; }
         .slider-guide-neutral { background-color: #f1c40f; }
         .slider-guide-agree { background-color: #2ecc71; }
+        .slider-guide-strongly-disagree { background-color: #c0392b; }
+        .slider-guide-strongly-agree { background-color: #27ae60; }
+
+        .slider-note {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
 
         /* Responsive Adjustments */
         @media (max-width: 768px) {
@@ -199,6 +219,7 @@ st.markdown("""
             .pillar-card { margin: 0.75rem 0; }
             .slider-guide { flex-direction: column; gap: 1rem; }
             .slider-guide-box { margin: 0.5rem 0; }
+            .why-thrivya { margin: 1rem 0; }
         }
     </style>
 """, unsafe_allow_html=True)
@@ -257,7 +278,7 @@ if "page" not in st.session_state:
 
 SLIDER_LEVELS = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
 LEVEL_SCORE = {lvl: i for i, lvl in enumerate(SLIDER_LEVELS)}
-LEVEL_COLORS = ["#e74c3c", "#f39c12", "#95a5a6", "#27ae60", "#2ecc71"]
+LEVEL_COLORS = ["#c0392b", "#e74c3c", "#f1c40f", "#27ae60", "#2ecc71"]
 
 # --- Utility Functions ---
 def get_score_interpretation(score):
@@ -349,18 +370,13 @@ if st.session_state.page == "intro":
             <h3>Growth Tracking</h3>
             <p>Learning opportunities, empowerment, and team dynamics evaluation</p>
         </div>
-        <div class="feature-item growth-card">
-            <div class="feature-icon">⚡</div>
-            <h3>Instant AI Insights</h3>
-            <p>Tailored to your organization's needs</p>
-        </div>
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("""
-    <div class="pillar-card">
+    <div class="why-thrivya">
         <h3 style="color: #2c3e50; margin-bottom: 1.25rem;">🚀 Why Thrivya?</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; text-align: center;">
             <div>
                 <strong>🔄 Continuous:</strong> Track progress and measure cultural transformation over time
             </div>
@@ -465,15 +481,18 @@ elif st.session_state.page == "culture":
     </div>
     """, unsafe_allow_html=True)
 
+    show_progress_bar()
+
+    st.markdown('<div class="slider-note">📌 Note: Use the guide below to align your slider responses accurately.</div>', unsafe_allow_html=True)
     st.markdown("""
     <div class="slider-guide">
-        <div class="slider-guide-box slider-guide-disagree">Strongly Disagree</div>
+        <div class="slider-guide-box slider-guide-strongly-disagree">Strongly Disagree</div>
+        <div class="slider-guide-box slider-guide-disagree">Disagree</div>
         <div class="slider-guide-box slider-guide-neutral">Neutral</div>
-        <div class="slider-guide-box slider-guide-agree">Strongly Agree</div>
+        <div class="slider-guide-box slider-guide-agree">Agree</div>
+        <div class="slider-guide-box slider-guide-strongly-agree">Strongly Agree</div>
     </div>
     """, unsafe_allow_html=True)
-
-    show_progress_bar()
 
     questions_culture = [q for q in questions if pillar_map[q['pillar']] == "Culture"]
 
@@ -504,15 +523,18 @@ elif st.session_state.page == "wellness":
     </div>
     """, unsafe_allow_html=True)
 
+    show_progress_bar()
+
+    st.markdown('<div class="slider-note">📌 Note: Use the guide below to align your slider responses accurately.</div>', unsafe_allow_html=True)
     st.markdown("""
     <div class="slider-guide">
-        <div class="slider-guide-box slider-guide-disagree">Strongly Disagree</div>
+        <div class="slider-guide-box slider-guide-strongly-disagree">Strongly Disagree</div>
+        <div class="slider-guide-box slider-guide-disagree">Disagree</div>
         <div class="slider-guide-box slider-guide-neutral">Neutral</div>
-        <div class="slider-guide-box slider-guide-agree">Strongly Agree</div>
+        <div class="slider-guide-box slider-guide-agree">Agree</div>
+        <div class="slider-guide-box slider-guide-strongly-agree">Strongly Agree</div>
     </div>
     """, unsafe_allow_html=True)
-
-    show_progress_bar()
 
     questions_wellness = [q for q in questions if pillar_map[q['pillar']] == "Wellness"]
 
@@ -543,15 +565,18 @@ elif st.session_state.page == "growth":
     </div>
     """, unsafe_allow_html=True)
 
+    show_progress_bar()
+
+    st.markdown('<div class="slider-note">📌 Note: Use the guide below to align your slider responses accurately.</div>', unsafe_allow_html=True)
     st.markdown("""
     <div class="slider-guide">
-        <div class="slider-guide-box slider-guide-disagree">Strongly Disagree</div>
+        <div class="slider-guide-box slider-guide-strongly-disagree">Strongly Disagree</div>
+        <div class="slider-guide-box slider-guide-disagree">Disagree</div>
         <div class="slider-guide-box slider-guide-neutral">Neutral</div>
-        <div class="slider-guide-box slider-guide-agree">Strongly Agree</div>
+        <div class="slider-guide-box slider-guide-agree">Agree</div>
+        <div class="slider-guide-box slider-guide-strongly-agree">Strongly Agree</div>
     </div>
     """, unsafe_allow_html=True)
-
-    show_progress_bar()
 
     questions_growth = [q for q in questions if pillar_map[q['pillar']] == "Growth"]
 
@@ -859,7 +884,7 @@ FORMAT: Use clear headings, bullet points, and actionable language. Make recomme
 TONE: Professional yet accessible, data-driven but human-centered, optimistic but realistic about challenges.
 """
 
-        with st.spinner("🔄 Deploying AI neural nets to process your HR data! Our product engine is fusing real-time culture metrics with predictive analytics, distilling actionable insights for your workforce. This might take a minute—UTC time (07:45 AM, July 13, 2025) is syncing the data pipeline!"):
+        with st.spinner("🔄 Processing with advanced AI intelligence using optimized prompts—will take about a minute!"):
             cohere_api_key = st.secrets.get("cohere_api_key")
             if cohere_api_key:
                 try:
