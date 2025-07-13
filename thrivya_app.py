@@ -201,7 +201,7 @@ st.markdown("""
 
         .continuous-feature { background: linear-gradient(135deg, #ff9f43 0%, #ec6f66 100%); color: white; }
         .data-driven-feature { background: linear-gradient(135deg, #4facfe 0%, #00d2ff 100%); color: white; }
-        .hr-focused-feature { background: linear-gradient(135deg, #6be585 0%, #3cba92 100%); color: white; }
+        .hr-focused-feature { background: linear-gradient(135deg, #d4a017 0%, #f4d03f 100%); color: white; }
 
         /* Slider Guide Styles */
         .slider-guide {
