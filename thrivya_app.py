@@ -168,12 +168,13 @@ st.markdown("""
         }
 
         .why-thrivya {
-            background: rgba(255, 255, 255, 0.95);
+            background: linear-gradient(135deg, #a29bfe 0%, #8e2de2 100%);
             border-radius: 12px;
             padding: 1.5rem;
             margin: 2rem 0;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             text-align: center;
+            color: white;
         }
 
         /* Slider Guide Styles */
@@ -278,7 +279,7 @@ if "page" not in st.session_state:
 
 SLIDER_LEVELS = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
 LEVEL_SCORE = {lvl: i for i, lvl in enumerate(SLIDER_LEVELS)}
-LEVEL_COLORS = ["#c0392b", "#e74c3c", "#f1c40f", "#27ae60", "#2ecc71"]
+LEVEL_COLORS = ["#c0392b", "#e74c3c", "#f1c40f", #27ae60", "#2ecc71"]
 
 # --- Utility Functions ---
 def get_score_interpretation(score):
@@ -370,22 +371,21 @@ if st.session_state.page == "intro":
             <h3>Growth Tracking</h3>
             <p>Learning opportunities, empowerment, and team dynamics evaluation</p>
         </div>
+        <div class="feature-item growth-card">
+            <div class="feature-icon">⚡</div>
+            <h3>AI Insights</h3>
+            <p>Tailored to your organization's needs</p>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("""
     <div class="why-thrivya">
-        <h3 style="color: #2c3e50; margin-bottom: 1.25rem;">🚀 Why Thrivya?</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; text-align: center;">
-            <div>
-                <strong>🔄 Continuous:</strong> Track progress and measure cultural transformation over time
-            </div>
-            <div>
-                <strong>📊 Data-Driven:</strong> Evidence-based culture assessment with actionable metrics
-            </div>
-            <div>
-                <strong>🎯 HR-Focused:</strong> Practical tools and templates for immediate implementation
-            </div>
+        <h3 style="margin-bottom: 1.25rem;">🚀 Why Thrivya?</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; text-align: center;">
+            <div><strong>🔄 Continuous</strong></div>
+            <div><strong>📊 Data-Driven</strong></div>
+            <div><strong>🎯 HR-Focused</strong></div>
         </div>
     </div>
     """, unsafe_allow_html=True)
