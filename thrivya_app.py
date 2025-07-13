@@ -5,8 +5,9 @@ import requests
 import plotly.graph_objects as go
 import plotly.express as px
 from pathlib import Path
-import numpy as np
+import pandas as pd
 from datetime import datetime, timedelta
+import numpy as np
 import uuid
 
 # --- Configuration ---
@@ -22,12 +23,19 @@ st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+        /* Global Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+
         .main-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 1rem;
         }
 
+        /* Header Styles */
         .main-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 2.5rem 1.5rem;
@@ -52,6 +60,7 @@ st.markdown("""
             opacity: 0.9;
         }
 
+        /* Card Styles */
         .pillar-card {
             background: white;
             border-radius: 12px;
@@ -158,6 +167,7 @@ st.markdown("""
             margin-bottom: 1rem;
         }
 
+        /* Responsive Adjustments */
         @media (max-width: 768px) {
             .main-title { font-size: 2rem; }
             .main-subtitle { font-size: 1rem; }
@@ -173,7 +183,7 @@ st.markdown("""
 def load_questions():
     file_path = Path("culture_questions.json")
     if not file_path.exists():
-        st.error("❌ Questions file not found. Please ensure culture_questions.json exists.")
+        st.error("❌ Questions file not found. Please ensure culture_questions.json exists in the project directory.")
         st.stop()
     try:
         with open(file_path) as f:
@@ -218,6 +228,7 @@ if "page" not in st.session_state:
         'current_challenges': []
     }
     st.session_state.assessment_start_time = None
+    st.session_state.current_question = 0
 
 SLIDER_LEVELS = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
 LEVEL_SCORE = {lvl: i for i, lvl in enumerate(SLIDER_LEVELS)}
@@ -225,6 +236,7 @@ LEVEL_COLORS = ["#e74c3c", "#f39c12", "#95a5a6", "#27ae60", "#2ecc71"]
 
 # --- Utility Functions ---
 def get_score_interpretation(score):
+    """Enhanced score interpretation with detailed insights"""
     if score >= 3.5:
         return "Excellent", "score-excellent", "🌟"
     elif score >= 2.5:
@@ -233,11 +245,13 @@ def get_score_interpretation(score):
         return "Needs Improvement", "score-needs-improvement", "⚠️"
 
 def calculate_completion_percentage():
+    """Calculate assessment completion percentage"""
     total_questions = len(questions)
     answered = len(st.session_state.responses)
     return min(int((answered / total_questions) * 100), 100)
 
 def show_progress_bar():
+    """Display enhanced progress indicator"""
     progress = calculate_completion_percentage()
     st.markdown(f"""
     <div style="margin: 1.5rem 0;">
@@ -252,9 +266,8 @@ def show_progress_bar():
     """, unsafe_allow_html=True)
 
 def show_enhanced_slider(q, idx, total, category):
+    """Enhanced question display with better UX"""
     category_color = pillar_colors[category]
-    current_val = LEVEL_SCORE.get(st.session_state.responses.get(q['id'], "Neutral"), 2)
-
     st.markdown(f"""
     <div class="question-card">
         <div style="display: flex; align-items: center; margin-bottom: 1rem;">
@@ -269,6 +282,10 @@ def show_enhanced_slider(q, idx, total, category):
     </div>
     """, unsafe_allow_html=True)
 
+    current_val = 2  # Default to neutral
+    if q['id'] in st.session_state.responses:
+        current_val = LEVEL_SCORE[st.session_state.responses[q['id']]]
+
     col1, col2 = st.columns([3, 1])
     with col1:
         val = st.slider(
@@ -278,19 +295,20 @@ def show_enhanced_slider(q, idx, total, category):
             key=f"slider_{q['id']}_{uuid.uuid4()}",
             label_visibility="collapsed"
         )
+
     with col2:
-        color = LEVEL_COLORS[val]
-        st.markdown(f"""
-        <div style="text-align: center; padding: 0.75rem; background: {color}; color: white; border-radius: 8px; font-weight: 600; margin-top: 1rem;">
-            {SLIDER_LEVELS[val]}
+        # Static info about slider options instead of dynamic status
+        st.markdown("""
+        <div style="text-align: center; padding: 0.75rem; background: #ecf0f1; color: #2c3e50; border-radius: 8px; font-weight: 500; margin-top: 1rem;">
+            Slider Options: Strongly Disagree to Strongly Agree
         </div>
         """, unsafe_allow_html=True)
-    # Update responses only when form is submitted, handled in the form callback
+
+    st.session_state.responses[q['id']] = SLIDER_LEVELS[val]
 
 # --- Page Navigation ---
-st.markdown('<div class="main-container">', unsafe_allow_html=True)
-
 if st.session_state.page == "intro":
+    st.markdown('<div class="main-container">', unsafe_allow_html=True)
     st.markdown("""
     <div class="main-header">
         <h1 class="main-title">Welcome to Thrivya 🌸</h1>
@@ -327,9 +345,15 @@ if st.session_state.page == "intro":
     <div class="pillar-card">
         <h3 style="color: #2c3e50; margin-bottom: 1.25rem;">🚀 Why Thrivya?</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">
-            <div><strong>🔄 Continuous:</strong> Track progress and measure cultural transformation</div>
-            <div><strong>📊 Data-Driven:</strong> Evidence-based culture assessment with metrics</div>
-            <div><strong>🎯 HR-Focused:</strong> Practical tools for immediate implementation</div>
+            <div>
+                <strong>🔄 Continuous:</strong> Track progress and measure cultural transformation over time
+            </div>
+            <div>
+                <strong>📊 Data-Driven:</strong> Evidence-based culture assessment with actionable metrics
+            </div>
+            <div>
+                <strong>🎯 HR-Focused:</strong> Practical tools and templates for immediate implementation
+            </div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -347,8 +371,10 @@ if st.session_state.page == "intro":
         <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; opacity: 0.7;">Empowering HR professionals with culture intelligence</p>
     </div>
     """, unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.page == "details":
+    st.markdown('<div class="main-container">', unsafe_allow_html=True)
     st.markdown("""
     <div class="main-header">
         <h1 class="main-title">🏢 Organization Profile</h1>
@@ -386,7 +412,7 @@ elif st.session_state.page == "details":
              "Recognition & Rewards", "Innovation", "Collaboration", "Work-Life Balance",
              "Career Development", "Performance Excellence"],
             default=st.session_state.org_info['culture_focus'],
-            help="Choose 3-5 areas that are most important"
+            help="Choose 3-5 areas that are most important to your organization"
         )
 
         st.session_state.org_info['current_challenges'] = st.multiselect(
@@ -411,9 +437,11 @@ elif st.session_state.page == "details":
                 st.session_state.page = "culture"
                 st.rerun()
             else:
-                st.error("Please fill in at least Organization Name and Industry.")
+                st.error("Please fill in at least Organization Name and Industry to continue.")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.page == "culture":
+    st.markdown('<div class="main-container">', unsafe_allow_html=True)
     st.markdown("""
     <div class="main-header">
         <h1 class="main-title">🎯 Culture Assessment</h1>
@@ -435,18 +463,16 @@ elif st.session_state.page == "culture":
         with col2:
             next_btn = st.form_submit_button("Next: Wellness Assessment →", use_container_width=True)
 
-        if next_btn:
-            # Update responses based on current slider values
-            for i, q in enumerate(questions_culture):
-                current_val = st.session_state[f"slider_{q['id']}_{uuid.uuid4().hex}"]
-                st.session_state.responses[q['id']] = SLIDER_LEVELS[current_val]
-            st.session_state.page = "wellness"
-            st.rerun()
         if back_btn:
             st.session_state.page = "details"
             st.rerun()
+        if next_btn:
+            st.session_state.page = "wellness"
+            st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.page == "wellness":
+    st.markdown('<div class="main-container">', unsafe_allow_html=True)
     st.markdown("""
     <div class="main-header">
         <h1 class="main-title">🧘 Wellness Assessment</h1>
@@ -468,18 +494,16 @@ elif st.session_state.page == "wellness":
         with col2:
             next_btn = st.form_submit_button("Next: Growth Assessment →", use_container_width=True)
 
-        if next_btn:
-            # Update responses based on current slider values
-            for i, q in enumerate(questions_wellness):
-                current_val = st.session_state[f"slider_{q['id']}_{uuid.uuid4().hex}"]
-                st.session_state.responses[q['id']] = SLIDER_LEVELS[current_val]
-            st.session_state.page = "growth"
-            st.rerun()
         if back_btn:
             st.session_state.page = "culture"
             st.rerun()
+        if next_btn:
+            st.session_state.page = "growth"
+            st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.page == "growth":
+    st.markdown('<div class="main-container">', unsafe_allow_html=True)
     st.markdown("""
     <div class="main-header">
         <h1 class="main-title">📈 Growth Assessment</h1>
@@ -501,18 +525,16 @@ elif st.session_state.page == "growth":
         with col2:
             generate_btn = st.form_submit_button("🎯 Generate Culture Intelligence Report", use_container_width=True)
 
-        if generate_btn:
-            # Update responses based on current slider values
-            for i, q in enumerate(questions_growth):
-                current_val = st.session_state[f"slider_{q['id']}_{uuid.uuid4().hex}"]
-                st.session_state.responses[q['id']] = SLIDER_LEVELS[current_val]
-            st.session_state.page = "results"
-            st.rerun()
         if back_btn:
             st.session_state.page = "wellness"
             st.rerun()
+        if generate_btn:
+            st.session_state.page = "results"
+            st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.page == "results":
+    st.markdown('<div class="main-container">', unsafe_allow_html=True)
     st.markdown("""
     <div class="main-header">
         <h1 class="main-title">📊 Culture Intelligence Report</h1>
@@ -690,9 +712,9 @@ elif st.session_state.page == "results":
         detailed_answers_str = "\n".join(detailed_answers)
 
         enhanced_prompt = f"""
-You are a senior Culture & People Analytics Consultant with 15+ years of experience.
+You are a senior Culture & People Analytics Consultant with 15+ years of experience helping organizations transform their workplace culture. You've worked with Fortune 500 companies and startups across various industries.
 
-Based on the data below, provide a strategic analysis and action plan:
+Based on the comprehensive culture intelligence data below, provide a detailed strategic analysis and action plan:
 
 ## ORGANIZATION PROFILE:
 🏢 **Company**: {org.get('name', 'N/A')} | **Industry**: {org.get('industry', 'N/A')} | **Size**: {org.get('size', 'N/A')} | **Location**: {org.get('location', 'N/A')}
@@ -710,123 +732,212 @@ Based on the data below, provide a strategic analysis and action plan:
 {detailed_answers_str}
 
 ## REQUIRED DELIVERABLES:
+
 ### 1. 🎯 EXECUTIVE SUMMARY (150 words)
-Overview of culture health, top 3 strengths, top 3 areas needing attention, industry insights.
+Provide a high-level strategic overview of the organization's culture health. Highlight the top 3 strengths and top 3 critical areas needing attention. Include industry-specific insights and benchmarking context.
 
 ### 2. 📊 DEEP DIVE ANALYSIS
-- **Culture**: Leadership & Vision, Inclusivity & Belonging, Recognition & Motivation
-- **Wellness**: Well-being & Work-Life, Feedback & Communication
-- **Growth**: Learning & Growth, Team Dynamics & Trust, Autonomy & Empowerment
+**Culture Pillar Analysis:**
+- Leadership & Vision effectiveness
+- Inclusivity & Belonging assessment
+- Recognition & Motivation patterns
+
+**Wellness Pillar Analysis:**
+- Well-being & Work-Life balance status
+- Feedback & Communication effectiveness
+
+**Growth Pillar Analysis:**
+- Learning & Development opportunities
+- Team Dynamics & Trust levels
+- Autonomy & Empowerment culture
 
 ### 3. 🚀 STRATEGIC ACTION PLAN
-- **Immediate (0-30 days)**: 3-5 quick wins, high-impact, low-cost
-- **Short-term (30-90 days)**: 3-5 projects, timelines, resources, metrics
-- **Long-term (90-365 days)**: 2-3 initiatives, change management
+**Immediate Actions (0-30 days):**
+- List 3-5 quick wins that can be implemented immediately
+- Focus on high-impact, low-cost initiatives
+- Include specific steps and responsible parties
 
-### 4. 🛠️ TOOLS & RESOURCES
-- **HR Tech**: Software for challenges
-- **Templates**: Implementation frameworks, KPIs
-- **Training**: Programs, leadership development
+**Short-term Initiatives (30-90 days):**
+- 3-5 medium-term projects with clear timelines
+- Include resource requirements and success metrics
+- Focus on addressing the lowest scoring pillars
 
-### 5. 📈 METRICS & KPIs
-- **Culture Metrics**: KPIs per pillar, baselines, targets
-- **ROI Indicators**: Engagement, retention, productivity
+**Long-term Strategy (90-365 days):**
+- 2-3 transformational initiatives
+- Include change management considerations
+- Focus on sustainable culture transformation
 
-### 6. 🎭 INDUSTRY CONSIDERATIONS
-- Challenges, benchmarks, compliance for {org.get('industry', 'industry')}
+### 4. 🛠️ RECOMMENDED TOOLS & RESOURCES
+**HR Tech Stack:**
+- Suggest specific software/platforms for the identified challenges
+- Include employee engagement platforms, feedback tools, learning management systems
+
+**Templates & Frameworks:**
+- Provide specific templates for implementation
+- Include measurement frameworks and KPIs
+- Suggest industry-specific best practices
+
+**Training & Development:**
+- Recommend specific training programs
+- Include leadership development initiatives
+- Suggest both internal and external resources
+
+### 5. 📈 SUCCESS METRICS & KPIs
+**Culture Metrics:**
+- Define specific, measurable KPIs for each pillar
+- Include baseline measurements and target improvements
+- Suggest measurement frequency and methods
+
+**ROI Indicators:**
+- Link culture improvements to business outcomes
+- Include engagement, retention, and productivity metrics
+- Suggest cost-benefit analysis frameworks
+
+### 6. 🎭 INDUSTRY-SPECIFIC CONSIDERATIONS
+Provide {org.get('industry', 'industry')}-specific insights:
+- Common culture challenges in this industry
+- Industry benchmarks and best practices
+- Regulatory/compliance considerations if applicable
 
 ### 7. 🚨 RISK MITIGATION
-- **Change Management**: Resistance points, strategies
-- **Implementation**: Constraints, phased approach
+**Change Management Risks:**
+- Identify potential resistance points
+- Suggest mitigation strategies
+- Include communication plans
 
-FORMAT: Headings, bullet points, actionable language, emojis.
-TONE: Professional, data-driven, human-centered, optimistic.
+**Implementation Risks:**
+- Highlight resource constraints
+- Suggest phased implementation approaches
+- Include contingency plans
+
+FORMAT: Use clear headings, bullet points, and actionable language. Make recommendations specific, measurable, and time-bound. Include relevant emojis for visual appeal and readability.
+
+TONE: Professional yet accessible, data-driven but human-centered, optimistic but realistic about challenges.
 """
 
-        with st.spinner("🔄 Generating report..."):
+        with st.spinner("🔄 Generating your comprehensive culture intelligence report..."):
             cohere_api_key = st.secrets.get("cohere_api_key")
             if cohere_api_key:
                 try:
                     response = requests.post(
                         url="https://api.cohere.ai/v1/chat",
-                        headers={"Authorization": f"Bearer {cohere_api_key}", "Content-Type": "application/json"},
-                        json={"model": "command-r-plus", "message": enhanced_prompt, "temperature": 0.7, "max_tokens": 4096},
+                        headers={
+                            "Authorization": f"Bearer {cohere_api_key}",
+                            "Content-Type": "application/json"
+                        },
+                        json={
+                            "model": "command-r-plus",
+                            "message": enhanced_prompt,
+                            "temperature": 0.7,
+                            "max_tokens": 4096
+                        },
                         timeout=180
                     )
+
                     if response.status_code == 200:
-                        result = response.json().get("text", "No response.")
+                        result = response.json().get("text", "No AI response returned.")
                         st.markdown(f"""
                         <div class="recommendation-box">
-                            <h3 style="margin-top: 0; color: #2c3e50;">🤖 AI-Generated Report</h3>
+                            <h3 style="margin-top: 0; color: #2c3e50;">🤖 AI-Generated Culture Intelligence Report</h3>
                             <p style="margin-bottom: 0; color: #7f8c8d; font-size: 0.9rem;">
-                                Generated on {datetime.now().strftime('%B %d, %Y at %I:%M %p')} | {len(responses)} responses
+                                Generated on {datetime.now().strftime('%B %d, %Y at %I:%M %p')} |
+                                Based on {len(responses)} responses across {len(set(pillar_map.values()))} culture pillars
                             </p>
                         </div>
                         """, unsafe_allow_html=True)
                         st.markdown(result)
                     else:
-                        st.error(f"❌ API Error: {response.status_code}")
+                        st.error(f"❌ API Error: {response.status_code} - {response.text}")
                 except requests.exceptions.Timeout:
-                    st.error("❌ Request timeout.")
+                    st.error("❌ Request timeout. Please try again.")
+                except requests.exceptions.RequestException as e:
+                    st.error(f"❌ Network error: {str(e)}")
                 except Exception as e:
-                    st.error(f"❌ Error: {str(e)}")
+                    st.error(f"❌ Unexpected error: {str(e)}")
             else:
-                st.warning("⚠️ API key missing. Configure it for AI recommendations.")
+                st.warning("⚠️ Cohere API key not found in secrets. Please configure your API key to generate AI recommendations.")
                 st.markdown("""
                 <div class="recommendation-box">
-                    <h3>📋 Basic Analysis</h3>
-                    <p>General observations based on responses:</p>
+                    <h3 style="margin-top: 0;">📋 Basic Culture Analysis</h3>
+                    <p>Based on your responses, here are some general observations:</p>
                 </div>
                 """, unsafe_allow_html=True)
                 if overall_score >= 3.5:
-                    st.success("🌟 Excellent cultural health!")
+                    st.success("🌟 Your organization shows excellent cultural health across all dimensions!")
                 elif overall_score >= 2.5:
-                    st.info("👍 Solid foundation with room for improvement.")
+                    st.info("👍 Your organization has a solid cultural foundation with room for targeted improvements.")
                 else:
-                    st.warning("⚠️ Opportunities for enhancement.")
+                    st.warning("⚠️ Your organization has significant opportunities for cultural enhancement.")
                 lowest_score = min(avg_scores.items(), key=lambda x: x[1])
                 st.markdown(f"""
-                **Focus Area:** {lowest_score[0]} ({lowest_score[1]}/4.0)
-                **Recommendations:** Improve {lowest_score[0].lower()} initiatives, conduct focus groups, implement pulse surveys
+                **Priority Focus Area:** {lowest_score[0]} (Score: {lowest_score[1]}/4.0)
+
+                **General Recommendations:**
+                - Focus on improving {lowest_score[0].lower()} initiatives
+                - Conduct focus groups to understand specific pain points
+                - Implement regular pulse surveys to track progress
+                - Consider leadership training programs
+                - Review and update policies related to your lowest-scoring areas
                 """)
-    except Exception as e:
-        st.error(f"❌ Error in recommendations: {str(e)}")
 
-    # Additional Insights
-    st.markdown("### 📊 Additional Insights")
-    col1, col2 = st.columns([1, 1], gap="medium")
-    with col1:
-        response_counts = {level: sum(1 for r in responses.values() if r == level) for level in SLIDER_LEVELS}
-        fig_dist = px.bar(x=list(response_counts.keys()), y=list(response_counts.values()), title="Response Distribution",
-                         color=list(response_counts.values()), color_continuous_scale="RdYlGn")
-        fig_dist.update_layout(height=400, margin=dict(l=50, r=50, t=50, b=50))
-        st.plotly_chart(fig_dist, use_container_width=True)
-    with col2:
-        pillar_scores = {p: round(np.mean(detailed_scores[p]), 2) for p in detailed_scores}
-        fig_pillar = px.bar(x=list(pillar_scores.values()), y=list(pillar_scores.keys()), orientation='h',
-                           title="Pillar-wise Scores", color=list(pillar_scores.values()), color_continuous_scale="RdYlGn")
-        fig_pillar.update_layout(height=400, margin=dict(l=50, r=50, t=50, b=50))
-        st.plotly_chart(fig_pillar, use_container_width=True)
+        # Additional Analytics
+        st.markdown("### 📊 Additional Insights")
+        col1, col2 = st.columns([1, 1], gap="medium")
 
-    # Assessment Summary
-    assessment_time = datetime.now() - st.session_state.assessment_start_time if st.session_state.assessment_start_time else timedelta(minutes=10)
-    st.markdown(f"""
-    <div class="pillar-card">
-        <h4 style="margin-top: 0; color: #2c3e50;">📋 Assessment Summary</h4>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 1.25rem;">
-            <div><strong>📊 Total Questions:</strong> {len(questions)}</div>
-            <div><strong>✅ Responses:</strong> {len(responses)}</div>
-            <div><strong>⏱️ Time Taken:</strong> ~{int(assessment_time.total_seconds() / 60)} min</div>
-            <div><strong>📈 Completion:</strong> {calculate_completion_percentage()}%</div>
+        with col1:
+            response_counts = {level: 0 for level in SLIDER_LEVELS}
+            for resp in responses.values():
+                response_counts[resp] += 1
+
+            fig_dist = px.bar(
+                x=list(response_counts.keys()),
+                y=list(response_counts.values()),
+                title="Response Distribution",
+                color=list(response_counts.values()),
+                color_continuous_scale="RdYlGn"
+            )
+            fig_dist.update_layout(height=400, margin=dict(l=50, r=50, t=50, b=50))
+            st.plotly_chart(fig_dist, use_container_width=True)
+
+        with col2:
+            pillar_scores = {}
+            for pillar, scores_list in detailed_scores.items():
+                pillar_scores[pillar] = round(np.mean(scores_list), 2)
+
+            fig_pillar = px.bar(
+                x=list(pillar_scores.values()),
+                y=list(pillar_scores.keys()),
+                orientation='h',
+                title="Pillar-wise Scores",
+                color=list(pillar_scores.values()),
+                color_continuous_scale="RdYlGn"
+            )
+            fig_pillar.update_layout(height=400, margin=dict(l=50, r=50, t=50, b=50))
+            st.plotly_chart(fig_pillar, use_container_width=True)
+
+        # Assessment Summary
+        assessment_time = datetime.now() - st.session_state.assessment_start_time if st.session_state.assessment_start_time else timedelta(minutes=10)
+        st.markdown(f"""
+        <div class="pillar-card">
+            <h4 style="margin-top: 0; color: #2c3e50;">📋 Assessment Summary</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 1.25rem;">
+                <div><strong>📊 Total Questions:</strong> {len(questions)}</div>
+                <div><strong>✅ Responses Collected:</strong> {len(responses)}</div>
+                <div><strong>⏱️ Time Taken:</strong> ~{int(assessment_time.total_seconds() / 60)} minutes</div>
+                <div><strong>📈 Completion Rate:</strong> {calculate_completion_percentage()}%</div>
+            </div>
         </div>
-    </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
 
+    except Exception as e:
+        st.error(f"❌ Error generating recommendations: {str(e)}")
+        st.info("Please try refreshing the page or contact support if the issue persists.")
+
+    # Brand Footer
     st.markdown("""
     <div class="brand-footer">
         <p style="margin: 0; font-size: 1rem; font-weight: 600;">Thrivya Culture Intelligence Platform</p>
         <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.8;">Crafted by Hemaang Patkar</p>
     </div>
     """, unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
