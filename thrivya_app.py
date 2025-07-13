@@ -166,6 +166,30 @@ st.markdown("""
             margin-bottom: 1rem;
         }
 
+        /* Slider Guide Styles */
+        .slider-guide {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .slider-guide-box {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .slider-guide-disagree { background-color: #e74c3c; }
+        .slider-guide-neutral { background-color: #f1c40f; }
+        .slider-guide-agree { background-color: #2ecc71; }
+
         /* Responsive Adjustments */
         @media (max-width: 768px) {
             .main-title { font-size: 2rem; }
@@ -173,6 +197,8 @@ st.markdown("""
             .intro-features { grid-template-columns: 1fr; }
             .metric-card { margin: 0.75rem 0; }
             .pillar-card { margin: 0.75rem 0; }
+            .slider-guide { flex-direction: column; gap: 1rem; }
+            .slider-guide-box { margin: 0.5rem 0; }
         }
     </style>
 """, unsafe_allow_html=True)
@@ -440,8 +466,10 @@ elif st.session_state.page == "culture":
     """, unsafe_allow_html=True)
 
     st.markdown("""
-    <div style="margin-bottom: 1.5rem; font-size: 0.9rem; color: #7f8c8d;">
-        📌 Note: Left most - Strongly Disagree, Middle - Neutral, Right most - Strongly Agree
+    <div class="slider-guide">
+        <div class="slider-guide-box slider-guide-disagree">Strongly Disagree</div>
+        <div class="slider-guide-box slider-guide-neutral">Neutral</div>
+        <div class="slider-guide-box slider-guide-agree">Strongly Agree</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -477,8 +505,10 @@ elif st.session_state.page == "wellness":
     """, unsafe_allow_html=True)
 
     st.markdown("""
-    <div style="margin-bottom: 1.5rem; font-size: 0.9rem; color: #7f8c8d;">
-        📌 Note: Left most - Strongly Disagree, Middle - Neutral, Right most - Strongly Agree
+    <div class="slider-guide">
+        <div class="slider-guide-box slider-guide-disagree">Strongly Disagree</div>
+        <div class="slider-guide-box slider-guide-neutral">Neutral</div>
+        <div class="slider-guide-box slider-guide-agree">Strongly Agree</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -514,8 +544,10 @@ elif st.session_state.page == "growth":
     """, unsafe_allow_html=True)
 
     st.markdown("""
-    <div style="margin-bottom: 1.5rem; font-size: 0.9rem; color: #7f8c8d;">
-        📌 Note: Left most - Strongly Disagree, Middle - Neutral, Right most - Strongly Agree
+    <div class="slider-guide">
+        <div class="slider-guide-box slider-guide-disagree">Strongly Disagree</div>
+        <div class="slider-guide-box slider-guide-neutral">Neutral</div>
+        <div class="slider-guide-box slider-guide-agree">Strongly Agree</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -627,8 +659,7 @@ elif st.session_state.page == "results":
         line=dict(color='rgba(102, 126, 234, 1)', width=3)
     ))
 
-    # Adjusted benchmark scores to match all three categories
-    benchmark_scores = [3.2, 2.8, 3.0]  # Ensure length matches avg_scores.keys()
+    benchmark_scores = [3.2, 2.8, 3.0]
     fig.add_trace(go.Scatterpolar(
         r=benchmark_scores,
         theta=list(avg_scores.keys()),
@@ -828,7 +859,7 @@ FORMAT: Use clear headings, bullet points, and actionable language. Make recomme
 TONE: Professional yet accessible, data-driven but human-centered, optimistic but realistic about challenges.
 """
 
-        with st.spinner("🔄 Generating your comprehensive culture intelligence report..."):
+        with st.spinner("🔄 Deploying AI neural nets to process your HR data! Our product engine is fusing real-time culture metrics with predictive analytics, distilling actionable insights for your workforce. This might take a minute—UTC time (07:45 AM, July 13, 2025) is syncing the data pipeline!"):
             cohere_api_key = st.secrets.get("cohere_api_key")
             if cohere_api_key:
                 try:
@@ -853,7 +884,7 @@ TONE: Professional yet accessible, data-driven but human-centered, optimistic bu
                         <div class="recommendation-box">
                             <h3 style="margin-top: 0; color: #2c3e50;">🤖 AI-Generated Culture Intelligence Report</h3>
                             <p style="margin-bottom: 0; color: #7f8c8d; font-size: 0.9rem;">
-                                Generated on {datetime.now().strftime('%B %d, %Y at %I:%M %p IST')}
+                                Generated on {datetime.now().strftime('%B %d, %Y at %I:%M %p UTC')}
                                 | Based on {len(responses)} responses
                             </p>
                         </div>
@@ -941,35 +972,6 @@ TONE: Professional yet accessible, data-driven but human-centered, optimistic bu
             </div>
         </div>
         """, unsafe_allow_html=True)
-
-        # Action Buttons
-        st.markdown("### 🎯 Next Steps")
-        col1, col2, col3 = st.columns(3)
-
-        with col1:
-            if st.button("📥 Export Report", use_container_width=True):
-                st.info("📧 Export functionality coming soon! Your report will be available for download.")
-
-        with col2:
-            if st.button("🔄 Retake Assessment", use_container_width=True):
-                st.session_state.page = "intro"
-                st.session_state.responses = {}
-                st.session_state.org_info = {
-                    'name': '',
-                    'industry': '',
-                    'location': '',
-                    'size': '',
-                    'years_active': 5,
-                    'remote_work': '',
-                    'culture_focus': [],
-                    'current_challenges': []
-                }
-                st.session_state.assessment_start_time = None
-                st.rerun()
-
-        with col3:
-            if st.button("📞 Schedule Consultation", use_container_width=True):
-                st.info("🤝 Consultation booking feature coming soon! Connect with our culture experts.")
 
     except Exception as e:
         st.error(f"❌ Error generating recommendations: {str(e)}")
