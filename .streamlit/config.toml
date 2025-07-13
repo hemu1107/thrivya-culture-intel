@@ -1,9 +1,9 @@
 [theme]
 base = "light"
-primaryColor = "#4A90E2"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F5F5F5"
-textColor = "#000000"
+primaryColor = "#5A67D8"                    # Calming violet-blue (trust + insight)
+backgroundColor = "#F9FAFB"                 # Very soft grey-white
+secondaryBackgroundColor = "#FFFFFF"        # Card backgrounds
+textColor = "#111827"                       # Rich charcoal for readability
 font = "sans serif"
 
 [browser]
