@@ -260,9 +260,9 @@ st.markdown("""
 # --- Load Questions ---
 @st.cache_data
 def load_questions():
-    file_path = Path("culture_questions (1).json") # Updated file name
+    file_path = Path("culture_questions.json") # Updated file name to "culture_questions.json"
     if not file_path.exists():
-        st.error("❌ Questions file not found. Please ensure culture_questions (1).json exists in the project directory.") # Updated file name
+        st.error("❌ Questions file not found. Please ensure culture_questions.json exists in the project directory.") # Updated file name
         st.stop()
     try:
         with open(file_path) as f:
