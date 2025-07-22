@@ -260,9 +260,9 @@ st.markdown("""
 # --- Load Questions ---
 @st.cache_data
 def load_questions():
-    file_path = Path("culture_questions.json")
+    file_path = Path("culture_questions (1).json") # Updated file name
     if not file_path.exists():
-        st.error("❌ Questions file not found. Please ensure culture_questions.json exists in the project directory.")
+        st.error("❌ Questions file not found. Please ensure culture_questions (1).json exists in the project directory.") # Updated file name
         st.stop()
     try:
         with open(file_path) as f:
@@ -278,6 +278,7 @@ pillar_map = {
     "Leadership & Vision": "Culture",
     "Inclusivity & Belonging": "Culture",
     "Recognition & Motivation": "Culture",
+    "Compensation & Benefits": "Culture", # NEW ADDITION
     "Well-being & Work-Life": "Wellness",
     "Feedback & Communication": "Wellness",
     "Learning & Growth": "Growth",
@@ -480,7 +481,7 @@ elif st.session_state.page == "details":
             "Select your top cultural priorities:",
             ["Transparency", "Flexibility", "Diversity & Inclusion", "Employee Wellbeing",
              "Recognition & Rewards", "Innovation", "Collaboration", "Work-Life Balance",
-             "Career Development", "Performance Excellence"],
+             "Career Development", "Performance Excellence", "Competitive Compensation", "Benefits Package"], # Added new focus areas
             default=st.session_state.org_info['culture_focus'],
             help="Choose 3-5 areas that are most important to your organization"
         )
@@ -489,7 +490,7 @@ elif st.session_state.page == "details":
             "What are your current HR challenges?",
             ["High Turnover", "Low Engagement", "Poor Communication", "Lack of Growth Opportunities",
              "Burnout", "Remote Work Challenges", "Diversity Issues", "Leadership Gaps",
-             "Feedback Culture", "Change Management"],
+             "Feedback Culture", "Change Management", "Compensation Dissatisfaction", "Benefits Gaps"], # Added new challenges
             default=st.session_state.org_info['current_challenges']
         )
 
@@ -515,8 +516,7 @@ elif st.session_state.page == "culture":
     st.markdown("""
     <div class="main-header">
         <h1 class="main-title">🎯 Culture Assessment</h1>
-        <p class="main-subtitle">Leadership, Inclusion & Recognition</p>
-    </div>
+        <p class="main-subtitle">Leadership, Inclusion, Recognition & Compensation</p> </div>
     """, unsafe_allow_html=True)
 
     show_progress_bar()
@@ -722,7 +722,7 @@ elif st.session_state.page == "results":
         line=dict(color='rgba(102, 126, 234, 1)', width=3)
     ))
 
-    benchmark_scores = [3.2, 2.8, 3.0]
+    benchmark_scores = [3.2, 2.8, 3.0] # These would ideally come from actual benchmark data
     fig.add_trace(go.Scatterpolar(
         r=benchmark_scores,
         theta=list(avg_scores.keys()),
@@ -836,18 +836,11 @@ Based on the comprehensive culture intelligence data below, provide a detailed s
 - 📈 **Growth**: {avg_scores['Growth']}/4.0 ({get_score_interpretation(avg_scores['Growth'])[0]})
 
 ## DETAILED PILLAR ANALYSIS:
-{detailed_answers_str}
-
-## REQUIRED DELIVERABLES:
-
-### 1. 🎯 EXECUTIVE SUMMARY (150 words)
-Provide a high-level strategic overview of the organization's culture health. Highlight the top 3 strengths and top 3 critical areas needing attention. Include industry-specific insights and benchmarking context.
-
-### 2. 📊 DEEP DIVE ANALYSIS
 **Culture Pillar Analysis:**
 - Leadership & Vision effectiveness
 - Inclusivity & Belonging assessment
 - Recognition & Motivation patterns
+- Compensation & Benefits fairness and transparency # NEW ADDITION
 
 **Wellness Pillar Analysis:**
 - Well-being & Work-Life balance status
@@ -858,7 +851,7 @@ Provide a high-level strategic overview of the organization's culture health. Hi
 - Team Dynamics & Trust levels
 - Autonomy & Empowerment culture
 
-### 3. 🚀 STRATEGIC ACTION PLAN
+## STRATEGIC ACTION PLAN
 **Immediate Actions (0-30 days):**
 - List 3-5 quick wins that can be implemented immediately
 - Focus on high-impact, low-cost initiatives
@@ -874,7 +867,7 @@ Provide a high-level strategic overview of the organization's culture health. Hi
 - Include change management considerations
 - Focus on sustainable culture transformation
 
-### 4. 🛠️ RECOMMENDED TOOLS & RESOURCES
+## RECOMMENDED TOOLS & RESOURCES
 **HR Tech Stack:**
 - Suggest specific software/platforms for the identified challenges
 - Include employee engagement platforms, feedback tools, learning management systems
@@ -889,7 +882,7 @@ Provide a high-level strategic overview of the organization's culture health. Hi
 - Include leadership development initiatives
 - Suggest both internal and external resources
 
-### 5. 📈 SUCCESS METRICS & KPIs
+## SUCCESS METRICS & KPIs
 **Culture Metrics:**
 - Define specific, measurable KPIs for each pillar
 - Include baseline measurements and target improvements
@@ -900,13 +893,13 @@ Provide a high-level strategic overview of the organization's culture health. Hi
 - Include engagement, retention, and productivity metrics
 - Suggest cost-benefit analysis frameworks
 
-### 6. 🎭 INDUSTRY-SPECIFIC CONSIDERATIONS
+## INDUSTRY-SPECIFIC CONSIDERATIONS
 Provide {org.get('industry', 'industry')}-specific insights:
 - Common culture challenges in this industry
 - Industry benchmarks and best practices
 - Regulatory/compliance considerations if applicable
 
-### 7. 🚨 RISK MITIGATION
+## RISK MITIGATION
 **Change Management Risks:**
 - Identify potential resistance points
 - Suggest mitigation strategies
