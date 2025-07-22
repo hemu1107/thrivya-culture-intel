@@ -36,6 +36,30 @@
     "options": ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
   },
   {
+    "id": "C7",
+    "pillar": "Compensation & Benefits",
+    "question": "How fair and competitive do you perceive your overall compensation (salary, bonuses, benefits) to be compared to industry standards?",
+    "options": ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
+  },
+  {
+    "id": "C8",
+    "pillar": "Compensation & Benefits",
+    "question": "How transparent is the organization regarding its compensation structure and pay policies?",
+    "options": ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
+  },
+  {
+    "id": "C9",
+    "pillar": "Compensation & Benefits",
+    "question": "To what extent do you feel that your compensation adequately reflects your contributions and performance?",
+    "options": ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
+  },
+  {
+    "id": "C10",
+    "pillar": "Compensation & Benefits",
+    "question": "How satisfied are you with the range and quality of employee benefits (e.g., health insurance, retirement plans, paid time off)?",
+    "options": ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
+  },
+  {
     "id": "W1",
     "pillar": "Well-being & Work-Life",
     "question": "How supported do employees feel regarding mental health and work-life balance?",
