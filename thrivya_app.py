@@ -78,7 +78,6 @@ st.markdown("""
         .culture-card { border-left-color: #ff6b6b; }
         .wellness-card { border-left-color: #4ecdc4; }
         .growth-card { border-left-color: #45b7d1; }
-        .compensation-card { border-left-color: #8e44ad; } # New Compensation card style
 
         .metric-card {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -261,9 +260,9 @@ st.markdown("""
 # --- Load Questions ---
 @st.cache_data
 def load_questions():
-    file_path = Path("culture_questions.json") # Ensure this file exists with the new questions
+    file_path = Path("culture_questions.json") # Updated file name to "culture_questions.json"
     if not file_path.exists():
-        st.error("❌ Questions file not found. Please ensure culture_questions.json exists in the project directory.")
+        st.error("❌ Questions file not found. Please ensure culture_questions.json exists in the project directory.") # Updated file name
         st.stop()
     try:
         with open(file_path) as f:
@@ -279,20 +278,19 @@ pillar_map = {
     "Leadership & Vision": "Culture",
     "Inclusivity & Belonging": "Culture",
     "Recognition & Motivation": "Culture",
+    "Compensation & Benefits": "Culture", # NEW ADDITION
     "Well-being & Work-Life": "Wellness",
     "Feedback & Communication": "Wellness",
     "Learning & Growth": "Growth",
     "Team Dynamics & Trust": "Growth",
-    "Autonomy & Empowerment": "Growth",
-    "Compensation & Benefits": "Compensation" # New pillar
+    "Autonomy & Empowerment": "Growth"
 }
 
 # --- Color Mapping ---
 pillar_colors = {
     "Culture": "#ff6b6b",
     "Wellness": "#4ecdc4",
-    "Growth": "#45b7d1",
-    "Compensation": "#8e44ad" # New color for the new category
+    "Growth": "#45b7d1"
 }
 
 # --- Session State Initialization ---
@@ -406,10 +404,10 @@ if st.session_state.page == "intro":
             <h3>Growth Tracking</h3>
             <p>Learning opportunities, empowerment, and team dynamics evaluation</p>
         </div>
-        <div class="feature-item compensation-card">
-            <div class="feature-icon">💰</div>
-            <h3>Compensation & Benefits</h3>
-            <p>Fairness, competitiveness, and transparency in rewards</p>
+        <div class="feature-item growth-card">
+            <div class="feature-icon">⚡</div>
+            <h3>AI Insights</h3>
+            <p>Tailored to your organization's needs</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -483,7 +481,7 @@ elif st.session_state.page == "details":
             "Select your top cultural priorities:",
             ["Transparency", "Flexibility", "Diversity & Inclusion", "Employee Wellbeing",
              "Recognition & Rewards", "Innovation", "Collaboration", "Work-Life Balance",
-             "Career Development", "Performance Excellence", "Fair Compensation & Benefits"], # Added new focus area
+             "Career Development", "Performance Excellence", "Competitive Compensation", "Benefits Package"], # Added new focus areas
             default=st.session_state.org_info['culture_focus'],
             help="Choose 3-5 areas that are most important to your organization"
         )
@@ -492,7 +490,7 @@ elif st.session_state.page == "details":
             "What are your current HR challenges?",
             ["High Turnover", "Low Engagement", "Poor Communication", "Lack of Growth Opportunities",
              "Burnout", "Remote Work Challenges", "Diversity Issues", "Leadership Gaps",
-             "Feedback Culture", "Change Management", "Compensation & Benefit Dissatisfaction"], # Added new challenge
+             "Feedback Culture", "Change Management", "Compensation Dissatisfaction", "Benefits Gaps"], # Added new challenges
             default=st.session_state.org_info['current_challenges']
         )
 
@@ -518,8 +516,7 @@ elif st.session_state.page == "culture":
     st.markdown("""
     <div class="main-header">
         <h1 class="main-title">🎯 Culture Assessment</h1>
-        <p class="main-subtitle">Leadership, Inclusion & Recognition</p>
-    </div>
+        <p class="main-subtitle">Leadership, Inclusion, Recognition & Compensation</p> </div>
     """, unsafe_allow_html=True)
 
     show_progress_bar()
@@ -629,52 +626,10 @@ elif st.session_state.page == "growth":
         with col1:
             back_btn = st.form_submit_button("← Back to Wellness")
         with col2:
-            next_btn = st.form_submit_button("Next: Compensation & Benefits Assessment →", use_container_width=True)
-
-        if back_btn:
-            st.session_state.page = "wellness"
-            st.rerun()
-        if next_btn:
-            st.session_state.page = "compensation_benefits" # New page transition
-            st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-
-elif st.session_state.page == "compensation_benefits": # New Page for Compensation & Benefits
-    st.markdown('<div class="main-container">', unsafe_allow_html=True)
-    st.markdown("""
-    <div class="main-header">
-        <h1 class="main-title">💰 Compensation & Benefits Assessment</h1>
-        <p class="main-subtitle">Fairness, Competitiveness & Transparency</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    show_progress_bar()
-
-    st.markdown('<div class="slider-note">📌 Note: Use the guide below to align your slider responses accurately.</div>', unsafe_allow_html=True)
-    st.markdown("""
-    <div class="slider-guide">
-        <div class="slider-guide-box slider-guide-strongly-disagree">Strongly Disagree</div>
-        <div class="slider-guide-box slider-guide-disagree">Disagree</div>
-        <div class="slider-guide-box slider-guide-neutral">Neutral</div>
-        <div class="slider-guide-box slider-guide-agree">Agree</div>
-        <div class="slider-guide-box slider-guide-strongly-agree">Strongly Agree</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    questions_compensation = [q for q in questions if pillar_map[q['pillar']] == "Compensation"]
-
-    with st.form("compensation_benefits_form"):
-        for i, q in enumerate(questions_compensation):
-            show_enhanced_slider(q, i, len(questions_compensation), "Compensation")
-
-        col1, col2 = st.columns([1, 1], gap="medium")
-        with col1:
-            back_btn = st.form_submit_button("← Back to Growth")
-        with col2:
             generate_btn = st.form_submit_button("🎯 Generate Culture Intelligence Report", use_container_width=True)
 
         if back_btn:
-            st.session_state.page = "growth"
+            st.session_state.page = "wellness"
             st.rerun()
         if generate_btn:
             # Validate that all questions have been answered
@@ -685,7 +640,6 @@ elif st.session_state.page == "compensation_benefits": # New Page for Compensati
                 st.session_state.page = "results"
                 st.rerun()
     st.markdown('</div>', unsafe_allow_html=True)
-
 
 elif st.session_state.page == "results":
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
@@ -700,8 +654,8 @@ elif st.session_state.page == "results":
     org = st.session_state.org_info
 
     # Score Calculation
-    scores = {'Culture': 0, 'Wellness': 0, 'Growth': 0, 'Compensation': 0} # Added Compensation
-    counts = {'Culture': 0, 'Wellness': 0, 'Growth': 0, 'Compensation': 0} # Added Compensation
+    scores = {'Culture': 0, 'Wellness': 0, 'Growth': 0}
+    counts = {'Culture': 0, 'Wellness': 0, 'Growth': 0}
     detailed_scores = {}
 
     for q in questions:
@@ -723,7 +677,7 @@ elif st.session_state.page == "results":
 
     # Executive Summary Cards
     st.markdown("### 🎯 Executive Summary")
-    col1, col2, col3, col4, col5 = st.columns([1, 1, 1, 1, 1], gap="medium") # Adjusted columns for Compensation
+    col1, col2, col3, col4 = st.columns([1, 1, 1, 1], gap="medium")
 
     with col1:
         overall_status, overall_class, overall_icon = get_score_interpretation(overall_score)
@@ -743,12 +697,8 @@ elif st.session_state.page == "results":
             col = col2
         elif category == "Wellness":
             col = col3
-        elif category == "Growth":
-            col = col4
-        elif category == "Compensation": # New column for Compensation
-            col = col5
         else:
-            continue
+            col = col4
 
         with col:
             st.markdown(f"""
@@ -772,8 +722,7 @@ elif st.session_state.page == "results":
         line=dict(color='rgba(102, 126, 234, 1)', width=3)
     ))
 
-    # Updated benchmark scores to include a placeholder for Compensation
-    benchmark_scores = [3.2, 2.8, 3.0, 2.9] # Added a sample benchmark for Compensation
+    benchmark_scores = [3.2, 2.8, 3.0] # These would ideally come from actual benchmark data
     fig.add_trace(go.Scatterpolar(
         r=benchmark_scores,
         theta=list(avg_scores.keys()),
@@ -805,9 +754,8 @@ elif st.session_state.page == "results":
     culture_pillars = [p for p in detailed_scores.keys() if pillar_map[p] == "Culture"]
     wellness_pillars = [p for p in detailed_scores.keys() if pillar_map[p] == "Wellness"]
     growth_pillars = [p for p in detailed_scores.keys() if pillar_map[p] == "Growth"]
-    compensation_pillars = [p for p in detailed_scores.keys() if pillar_map[p] == "Compensation"] # New detailed pillar list
 
-    col1, col2, col3, col4 = st.columns([1, 1, 1, 1], gap="medium") # Adjusted columns
+    col1, col2, col3 = st.columns([1, 1, 1], gap="medium")
 
     with col1:
         st.markdown("#### 🎯 Culture Pillars")
@@ -859,24 +807,6 @@ elif st.session_state.page == "results":
                 </div>
             </div>
             """, unsafe_allow_html=True)
-            
-    with col4: # New column for Compensation & Benefits
-        st.markdown("#### 💰 Compensation & Benefits Pillars")
-        for pillar in compensation_pillars:
-            pillar_avg = round(np.mean(detailed_scores[pillar]), 2)
-            status, class_name, icon = get_score_interpretation(pillar_avg)
-            st.markdown(f"""
-            <div class="pillar-card compensation-card">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <div style="font-weight: 600; color: #2c3e50;">{pillar}</div>
-                        <div style="font-size: 0.9rem; color: #7f8c8d;">{status}</div>
-                    </div>
-                    <div style="font-size: 1.5rem; font-weight: 700; color: {pillar_colors['Compensation']};">{pillar_avg}</div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
 
     # AI-Generated Recommendations
     st.markdown("### 🤖 AI-Powered Recommendations")
@@ -904,21 +834,13 @@ Based on the comprehensive culture intelligence data below, provide a detailed s
 - 🎯 **Culture**: {avg_scores['Culture']}/4.0 ({get_score_interpretation(avg_scores['Culture'])[0]})
 - 🧘 **Wellness**: {avg_scores['Wellness']}/4.0 ({get_score_interpretation(avg_scores['Wellness'])[0]})
 - 📈 **Growth**: {avg_scores['Growth']}/4.0 ({get_score_interpretation(avg_scores['Growth'])[0]})
-- 💰 **Compensation**: {avg_scores['Compensation']}/4.0 ({get_score_interpretation(avg_scores['Compensation'])[0]}) # New score in prompt
 
 ## DETAILED PILLAR ANALYSIS:
-{detailed_answers_str}
-
-## REQUIRED DELIVERABLES:
-
-### 1. 🎯 EXECUTIVE SUMMARY (150 words)
-Provide a high-level strategic overview of the organization's culture health. Highlight the top 3 strengths and top 3 critical areas needing attention. Include industry-specific insights and benchmarking context.
-
-### 2. 📊 DEEP DIVE ANALYSIS
 **Culture Pillar Analysis:**
 - Leadership & Vision effectiveness
 - Inclusivity & Belonging assessment
 - Recognition & Motivation patterns
+- Compensation & Benefits fairness and transparency # NEW ADDITION
 
 **Wellness Pillar Analysis:**
 - Well-being & Work-Life balance status
@@ -929,67 +851,62 @@ Provide a high-level strategic overview of the organization's culture health. Hi
 - Team Dynamics & Trust levels
 - Autonomy & Empowerment culture
 
-**Compensation & Benefits Pillar Analysis:** # New section for detailed analysis
-- Fairness and competitiveness of compensation
-- Satisfaction with benefits offered
-- Transparency of compensation philosophy and structures
-- Adequacy of compensation reflecting contributions and financial growth opportunities
-
-### 3. 🚀 STRATEGIC ACTION PLAN
+## STRATEGIC ACTION PLAN
 **Immediate Actions (0-30 days):**
-- List 3-5 quick wins that can be implemented immediately, including those related to compensation transparency or quick benefit wins.
+- List 3-5 quick wins that can be implemented immediately
 - Focus on high-impact, low-cost initiatives
 - Include specific steps and responsible parties
 
 **Short-term Initiatives (30-90 days):**
-- 3-5 medium-term projects with clear timelines, focusing on addressing the lowest scoring pillars, including Compensation & Benefits if applicable.
+- 3-5 medium-term projects with clear timelines
 - Include resource requirements and success metrics
 - Focus on addressing the lowest scoring pillars
 
 **Long-term Strategy (90-365 days):**
-- 2-3 transformational initiatives, considering holistic improvements including compensation and benefit restructuring.
+- 2-3 transformational initiatives
 - Include change management considerations
 - Focus on sustainable culture transformation
 
-### 4. 🛠️ RECOMMENDED TOOLS & RESOURCES
+## RECOMMENDED TOOLS & RESOURCES
 **HR Tech Stack:**
-- Suggest specific software/platforms for the identified challenges, including compensation management systems, benefits administration platforms, employee engagement platforms, feedback tools, learning management systems.
+- Suggest specific software/platforms for the identified challenges
+- Include employee engagement platforms, feedback tools, learning management systems
 
 **Templates & Frameworks:**
-- Provide specific templates for implementation, including compensation review templates, benefit communication frameworks, measurement frameworks and KPIs.
+- Provide specific templates for implementation
 - Include measurement frameworks and KPIs
 - Suggest industry-specific best practices
 
 **Training & Development:**
-- Recommend specific training programs, including leadership development initiatives, fair pay training for managers, and workshops on understanding employee benefits.
+- Recommend specific training programs
 - Include leadership development initiatives
 - Suggest both internal and external resources
 
-### 5. 📈 SUCCESS METRICS & KPIs
+## SUCCESS METRICS & KPIs
 **Culture Metrics:**
-- Define specific, measurable KPIs for each pillar, including Compensation & Benefits (e.g., compensation satisfaction scores, benefit utilization rates).
+- Define specific, measurable KPIs for each pillar
 - Include baseline measurements and target improvements
 - Suggest measurement frequency and methods
 
 **ROI Indicators:**
-- Link culture improvements to business outcomes, including engagement, retention, productivity metrics, and impact of compensation on recruitment and turnover.
+- Link culture improvements to business outcomes
 - Include engagement, retention, and productivity metrics
 - Suggest cost-benefit analysis frameworks
 
-### 6. 🎭 INDUSTRY-SPECIFIC CONSIDERATIONS
+## INDUSTRY-SPECIFIC CONSIDERATIONS
 Provide {org.get('industry', 'industry')}-specific insights:
-- Common culture challenges in this industry, with specific attention to compensation and benefits trends.
+- Common culture challenges in this industry
 - Industry benchmarks and best practices
-- Regulatory/compliance considerations if applicable (e.g., minimum wage laws, benefit mandates).
+- Regulatory/compliance considerations if applicable
 
-### 7. 🚨 RISK MITIGATION
+## RISK MITIGATION
 **Change Management Risks:**
-- Identify potential resistance points, especially regarding changes to compensation and benefits.
+- Identify potential resistance points
 - Suggest mitigation strategies
 - Include communication plans
 
 **Implementation Risks:**
-- Highlight resource constraints, financial implications of compensation changes.
+- Highlight resource constraints
 - Suggest phased implementation approaches
 - Include contingency plans
 
