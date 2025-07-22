@@ -910,7 +910,7 @@ Provide {org.get('industry', 'industry')}-specific insights:
 - Suggest phased implementation approaches
 - Include contingency plans
 
-FORMAT: Use clear headings, bullet points, and actionable language. Make recommendations specific, measurable, and time-bound. Include relevant emojis for visual appeal and readability.
+FORMAT: Use clear headings, bullet points, and actionable language. Make recommendations specific, measurable, and time-bound. **Include relevant emojis for visual appeal and readability.**
 
 TONE: Professional yet accessible, data-driven but human-centered, optimistic but realistic about challenges.
 """
