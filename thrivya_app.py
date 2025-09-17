@@ -926,7 +926,7 @@ TONE: Professional yet accessible, data-driven but human-centered, optimistic bu
                             "Content-Type": "application/json"
                         },
                         json={
-                            "model": "command-r-plus",
+                            "model": "command-r-plus-08-2024",
                             "message": enhanced_prompt,
                             "temperature": 0.7,
                             "max_tokens": 4096
